@@ -42,38 +42,44 @@ Git
 Steps
 Clone the Repository
 
-bash
-Copy
-Edit
 git clone https://github.com/yourusername/Neuro_Navigator.git
 cd Neuro_Navigator
+
 Create a Virtual Environment (recommended)
 
 bash
-Copy
-Edit
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
+
 Install Dependencies
 
 bash
-Copy
-Edit
 pip install -r requirements.txt
-Create .env File
+
 You can copy the template provided in this README:
 
 bash
-Copy
-Edit
 cp .env.example .env
+
 Then fill in the required values.
 
 .env.example
-env
-Copy
-Edit
+# OpenAI API key for LLM-based agents
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional: Hugging Face API key if using hosted embeddings/models
+HUGGINGFACEHUB_API_TOKEN=your_huggingface_api_token_here
+
+# Weather API key for real-time weather data
+WEATHER_API_KEY=your_weather_api_key_here
+
+# Booking API key if you integrate a booking/reservation tool
+BOOKING_API_KEY=your_booking_api_key_here
+
+# Environment setting (development or production)
+ENV=development
+
 # OpenAI API key for LLM-based agents
 OPENAI_API_KEY=your_openai_api_key_here
 
@@ -93,27 +99,20 @@ Note: Never commit the real .env file — only commit .env.example.
 Usage
 Run the application:
 
-bash
-Copy
-Edit
+
 python app.py
+
 Or with Streamlit frontend:
 
-bash
-Copy
-Edit
+
 streamlit run app.py
 You can also execute specific modules for testing:
 
-bash
-Copy
-Edit
+
 python agents/researcher.py
 python tools/weather_tool.py
+
 Project Structure
-css
-Copy
-Edit
 Neuro_Navigator/
 │
 ├── agents/
@@ -135,6 +134,7 @@ Neuro_Navigator/
 ├── requirements.txt
 ├── .env.example
 └── README.md
+
 Security Notes
 Do not commit your .env file.
 

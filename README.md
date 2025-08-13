@@ -1,4 +1,4 @@
-Neuro Navigator
+# Neuro Navigator
 Neuro Navigator is an AI-powered multi-agent assistant capable of performing research, planning, execution, and specialized domain tasks such as finance analysis, booking management, weather information retrieval, and web search. It is designed for modularity, making it easy to extend with new tools and agents.
 
 Features

@@ -1,40 +1,32 @@
 import os
-
-from langchain.agents import initialize_agent, Tool, AgentType
-from langchain_groq import ChatGroq
-from tools.search_tool import get_search_tool
-from tools.weather_tool import get_weather_tool
-from memory.vector_store import get_vector_store
+from langchain_community.llms import Ollama
+from langchain.output_parsers import StructuredOutputParser, ResponseSchema
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 
 def get_researcher_agent():
-    """Agent that gathers in-depth details using tools."""
-    llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"),model="llama3-70b-8192", temperature=0)
+    """Agent that gathers structured research details (JSON only)."""
+    llm = Ollama(model="mistral", temperature=0)
 
-    search_tool = Tool(
-        name="Search",
-        func=get_search_tool().run,
-        description="Search online for detailed info."
+    # --- JSON schema ---
+    schemas = [
+        ResponseSchema(name="insights", description="List of 3–5 research insights as short bullets"),
+        ResponseSchema(name="sources", description="List of sources in [title + link] format")
+    ]
+    output_parser = StructuredOutputParser.from_response_schemas(schemas)
+    format_instructions = output_parser.get_format_instructions()
+
+    prompt = PromptTemplate(
+        template=(
+            "You are a research assistant. "
+            "Use available knowledge and tools (search, weather, memory). "
+            "Answer strictly in JSON format.\n\n"
+            "Goal/Plan:\n{plan}\n\n"
+            "{format_instructions}"
+        ),
+        input_variables=["plan"],
+        partial_variables={"format_instructions": format_instructions}
     )
 
-    weather_tool = Tool(
-        name="WeatherLookup",
-        func=lambda loc: str(get_weather_tool()(loc)),
-        description="Look up weather for a location."
-    )
-
-    memory_store = get_vector_store()
-
-    memory_tool = Tool(
-        name="MemorySearch",
-        func=lambda query: str(memory_store.similarity_search(query, k=2)),
-        description="Search stored user preferences or past data."
-    )
-
-    tools = [search_tool, weather_tool, memory_tool]
-
-    return initialize_agent(
-        tools,
-        llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True
-    )
+    # ✅ Return chain, not dict
+    return LLMChain(llm=llm, prompt=prompt, output_parser=output_parser)

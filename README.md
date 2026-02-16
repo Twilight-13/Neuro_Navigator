@@ -1,154 +1,77 @@
-# Neuro Navigator
-Neuro Navigator is an AI-powered multi-agent assistant capable of performing research, planning, execution, and specialized domain tasks such as finance analysis, booking management, weather information retrieval, and web search. It is designed for modularity, making it easy to extend with new tools and agents.
+# 🧭 NeuroNavigator
 
-Features
-Multi-Agent Architecture
-Includes specialized agents for:
+**Your AI-Powered Autonomous Agent Team for Travel & Research**
 
-Research
+NeuroNavigator is an advanced multi-agent system designed to plan, research, budget, and execute complex missions autonomously. Built with a modular orchestrator pattern and a premium Streamlit UI, it leverages LLMs (Groq, OpenAI, or local Ollama) to turn high-level goals into actionable plans.
 
-Planning
+![App Screenshot](https://via.placeholder.com/800x400?text=NeuroNavigator+Dashboard) *Replace with actual screenshot*
 
-Execution
+## ✨ Features
 
-Finance
+- **🧠 Multi-Agent Orchestration**:
+  - **Planner**: Breaks down goals into strategic steps.
+  - **Researcher**: Gathers real-time insights and sources.
+  - **Finance**: Estimates budgets using live APIs (Amadeus, Booking.com, Numbeo).
+  - **Execution**: Generates day-by-day itineraries.
+- **💻 Premium UI**: Dark-themed, responsive dashboard built with Streamlit and Altair.
+- **🔌 Model Agnostic**: seamless switching between **Groq**, **OpenAI**, and **Local Ollama** models.
+- **🛠️ Extensible Tools**: Modular tool system for Search, Weather, Flights, and Stocks.
 
-Custom domain-specific tasks
+## 🚀 Getting Started
 
-Integrated Tools
+### Prerequisites
+- Python 3.10+
+- [Ollama](https://ollama.com/) (optional, for local inference)
 
-Search Tool – Retrieve and summarize online information
+### Installation
 
-Weather Tool – Fetch real-time and forecast weather data
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/Twilight-13/Neuro_Navigator.git
+    cd Neuro_Navigator
+    ```
 
-Booking Tool – Manage reservations or appointments
+2.  **Install Dependencies**
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate  # Windows: .\.venv\Scripts\activate
+    pip install -r requirements.txt
+    ```
 
-Vector Store – Store and retrieve contextually relevant memory for agents
+3.  **Configuration**
+    Copy `.env.example` (or create `.env`) and add your keys:
+    ```env
+    # Choose Provider: groq, openai, or ollama
+    LLM_PROVIDER=ollama
+    OLLAMA_MODEL=mistral
 
-Modular Design
-Tools and agents are independent and can be easily replaced or upgraded.
+    # API Keys (Required for specific tools)
+    SERPAPI_API_KEY=...
+    AMADEUS_CLIENT_ID=...
+    AMADEUS_CLIENT_SECRET=...
+    RAPIDAPI_KEY=...
+    ```
 
-Environment-Based Configuration
-All sensitive information (API keys, credentials) is loaded from .env for security.
+4.  **Run the Application**
+    ```bash
+    streamlit run app.py
+    ```
 
-Installation
-Prerequisites
-Python 3.10+
+## 🏗️ Architecture
 
-pip (Python package installer)
+- **`orchestrator.py`**: The brain of the operation. Manages the async workflow of agents.
+- **`config.py`**: Centralized configuration management and LLM factory.
+- **`agents/`**: Specialized agent definitions using LangChain.
+- **`tools/`**: Interface wrappers for external APIs.
 
-Git
+## 🤝 Contributing
 
-Steps
-Clone the Repository
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-git clone https://github.com/yourusername/Neuro_Navigator.git
-cd Neuro_Navigator
+## 📄 License
 
-Create a Virtual Environment (recommended)
-
-bash
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
-
-Install Dependencies
-
-bash
-pip install -r requirements.txt
-
-You can copy the template provided in this README:
-
-bash
-cp .env.example .env
-
-Then fill in the required values.
-
-.env.example
-# OpenAI API key for LLM-based agents
-OPENAI_API_KEY=your_openai_api_key_here
-
-# Optional: Hugging Face API key if using hosted embeddings/models
-HUGGINGFACEHUB_API_TOKEN=your_huggingface_api_token_here
-
-# Weather API key for real-time weather data
-WEATHER_API_KEY=your_weather_api_key_here
-
-# Booking API key if you integrate a booking/reservation tool
-BOOKING_API_KEY=your_booking_api_key_here
-
-# Environment setting (development or production)
-ENV=development
-
-# OpenAI API key for LLM-based agents
-OPENAI_API_KEY=your_openai_api_key_here
-
-# Optional: Hugging Face API key if using hosted embeddings/models
-HUGGINGFACEHUB_API_TOKEN=your_huggingface_api_token_here
-
-# Weather API key for real-time weather data
-WEATHER_API_KEY=your_weather_api_key_here
-
-# Booking API key if you integrate a booking/reservation tool
-BOOKING_API_KEY=your_booking_api_key_here
-
-# Environment setting (development or production)
-ENV=development
-Note: Never commit the real .env file — only commit .env.example.
-
-Usage
-Run the application:
-
-
-python app.py
-
-Or with Streamlit frontend:
-
-
-streamlit run app.py
-You can also execute specific modules for testing:
-
-
-python agents/researcher.py
-python tools/weather_tool.py
-
-Project Structure
-Neuro_Navigator/
-│
-├── agents/
-│   ├── execution.py
-│   ├── finance.py
-│   ├── planner.py
-│   ├── researcher.py
-│
-├── tools/
-│   ├── booking_tool.py
-│   ├── search_tool.py
-│   ├── weather_tool.py
-│
-├── memory/
-│   └── vector_store.py
-│
-├── app.py
-├── Main.py
-├── requirements.txt
-├── .env.example
-└── README.md
-
-Security Notes
-Do not commit your .env file.
-
-Always add .env to .gitignore.
-
-If you accidentally push secrets, rotate them immediately.
-
-Contributing
-Fork the repository
-
-Create a feature branch (git checkout -b feature-name)
-
-Commit your changes (git commit -m "Add new feature")
-
-Push to the branch (git push origin feature-name)
-
-Open a Pull Request
+Distributed under the MIT License. See `LICENSE` for more information.

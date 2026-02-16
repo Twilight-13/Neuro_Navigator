@@ -1,15 +1,10 @@
-import os
 from langchain.agents import initialize_agent, Tool, AgentType
-from langchain_groq import ChatGroq
 from tools.search_tool import get_search_tool
+from config import Config
 
 def get_planner_agent():
     """Agent that breaks user goals into actionable steps."""
-    llm = ChatGroq(
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        model="llama3-70b-8192",
-        temperature=0
-    )
+    llm = Config.get_llm(provider="groq") # Planner works best with Groq/Llama3
 
     search_tool = Tool(
         name="Search",

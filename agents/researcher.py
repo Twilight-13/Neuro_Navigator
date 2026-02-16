@@ -1,12 +1,11 @@
-import os
-from langchain_community.llms import Ollama
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from config import Config
 
 def get_researcher_agent():
     """Agent that gathers structured research details (JSON only)."""
-    llm = Ollama(model="mistral", temperature=0)
+    llm = Config.get_llm()
 
     # --- JSON schema ---
     schemas = [

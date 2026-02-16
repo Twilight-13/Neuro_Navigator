@@ -1,11 +1,11 @@
-from langchain_community.llms import Ollama
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from config import Config
 
 def get_execution_agent():
     """Agent that simulates execution with structured JSON itinerary."""
-    llm = Ollama(model="mistral", temperature=0)
+    llm = Config.get_llm()
 
     schemas = [
         ResponseSchema(name="itinerary", description="List of objects with day and activities")
